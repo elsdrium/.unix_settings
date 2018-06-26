@@ -60,7 +60,7 @@ Plug 'tpope/vim-fugitive'
 " Development
 "Plug 'elsdrium/Conque-Shell'
 Plug 'elsdrium/vim-sleuth'
-Plug 'airblade/vim-rooter'
+Plug 'airblade/vim-rooter', { 'on': 'Rooter' }
 Plug 'matze/vim-move'
 Plug 'godlygeek/tabular', { 'on': 'Tab' }
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
@@ -72,9 +72,11 @@ Plug 'junegunn/vim-easy-align'
 
 if v:version >= 800
   Plug 'w0rp/ale', { 'on': 'ALEEnable' }
-  Plug 'elsdrium/vim-gutentags'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+  if &filetype != "gitcommit"
+    Plug 'ludovicchabant/vim-gutentags'
+  endif
   if !has('nvim')
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
@@ -110,17 +112,17 @@ let g:airline#extensions#gutentags#enabled = 1
 """ deoplete.nvim {{{1
 let g:deoplete#enable_at_startup = 1
 augroup MyDeoplete
-  au!
+  autocmd!
   autocmd CompleteDone * silent! pclose!
 augroup END
 
 inoremap <silent><expr> <TAB>
-    \ pumvisible() ? "\<C-n>" :
-    \ <SID>check_back_space() ? "\<TAB>" :
-    \ deoplete#mappings#manual_complete()
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ deoplete#mappings#manual_complete()
 function! s:check_back_space() abort "{{{
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
 endfunction"}}}
 
 """ NERDCommenter {{{1
@@ -188,8 +190,7 @@ let g:tagbar_type_elixir = {
 """ vim-gutentags {{{1
 let $GTAGSLABEL = 'native-pygments'
 let $GTAGSCONF = '/usr/local/share/gtags/gtags.conf'
-nnoremap gu :GutentagsToggleEnabled<CR>
-let g:gutentags_enabled = 0
+nnoremap gu :GutentagsUpdate<CR>
 let g:gutentags_cache_dir = expand('~/.cache/tags')
 let g:gutentags_ctags_executable = 'ctags'
 let g:gutentags_ctags_tagfile = '.tags'
@@ -575,14 +576,16 @@ if has('patch-7.4.314')
 endif
 
 " miscellaneous {{{1
-aug MyMiscStuff
+augroup MyMiscStuff
   autocmd!
   autocmd! Syntax python :syn keyword Keyword self
   " auto-close quickfix window if it's the last one
-  au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
+  autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
   "Restore cursor position in previous editing session
-  au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
-aug END
+  autocmd BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+  autocmd BufWritePost *.exs silent :!mix format %
+  autocmd BufWritePost *.ex silent :!mix format %
+augroup END
 " always show status bar
 set ls=2
 
@@ -626,6 +629,9 @@ set t_Co=256 "
 
 " use F2 as pastetoggle
 set pastetoggle=<F2>
+
+" do not change directory
+set noautochdir
 
 "" Personal Key Mappings {{{1
 function! GoPrevious()
