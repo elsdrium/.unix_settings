@@ -74,9 +74,7 @@ if v:version >= 800
   Plug 'w0rp/ale', { 'on': 'ALEEnable' }
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-  if &filetype != "gitcommit"
-    Plug 'ludovicchabant/vim-gutentags'
-  endif
+  Plug 'ludovicchabant/vim-gutentags'
   if !has('nvim')
     Plug 'roxma/nvim-yarp'
     Plug 'roxma/vim-hug-neovim-rpc'
@@ -585,6 +583,7 @@ augroup MyMiscStuff
   autocmd BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
   autocmd BufWritePost *.exs silent :!mix format %
   autocmd BufWritePost *.ex silent :!mix format %
+  autocmd FileType gitcommit let g:gutentags_enabled = 0
 augroup END
 " always show status bar
 set ls=2
