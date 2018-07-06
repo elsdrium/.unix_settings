@@ -166,6 +166,7 @@ function findcpp {
 alias grep='grep --color=auto -n'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
+alias fpp='fpp --keep-open'
 alias vim='vim -O'
 alias nv='nvim -O'
 alias nvdiff='nvim -d'

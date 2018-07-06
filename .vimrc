@@ -581,9 +581,10 @@ augroup MyMiscStuff
   autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
   "Restore cursor position in previous editing session
   autocmd BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
-  autocmd BufWritePost *.exs silent :!mix format %
-  autocmd BufWritePost *.ex silent :!mix format %
+  autocmd BufWritePost *.exs silent :!mix format --check-equivalent %
+  autocmd BufWritePost *.ex silent :!mix format --check-equivalent %
   autocmd FileType gitcommit let g:gutentags_enabled = 0
+  autocmd FileType gitrebase let g:gutentags_enabled = 0
 augroup END
 " always show status bar
 set ls=2
@@ -655,7 +656,10 @@ imap <C-]> <C-o>l
 nmap ;vl :vertical res +10<CR>
 nmap ;vs :vertical res -10 <CR>
 noremap <silent> ,, <Esc>:bnext<CR>
+noremap <silent> <M-PageDown> <Esc>:bnext<CR>
 noremap <silent> ,. <Esc>:bprevious<CR>
+noremap <silent> <M-PageUp> <Esc>:bprevious<CR>
+noremap <silent> ,<Space> <Esc>:e#<CR>
 noremap <C-s> <Esc>:e!<CR>
 inoremap <C-s> <Esc>:e!<CR>
 inoremap ;; <Esc>
