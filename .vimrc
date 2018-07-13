@@ -64,7 +64,7 @@ Plug 'airblade/vim-rooter', { 'on': 'Rooter' }
 Plug 'matze/vim-move'
 Plug 'godlygeek/tabular', { 'on': 'Tab' }
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
-Plug 'jistr/vim-nerdtree-tabs' | Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs' | Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeFind', 'NERDTree'] }
 Plug 'scrooloose/nerdcommenter'
 Plug 'Yggdroot/indentLine'
 "Plug 'jeaye/color_coded', { 'do': 'cmake . && make && make install', 'for': ['c', 'cpp', 'objc', 'objcpp'] }
@@ -215,6 +215,10 @@ function! NERDTreeFindToggle()
     NERDTreeTabsClose
   else
     NERDTreeFind
+    " if not found
+    if !exists('t:NERDTreeBufName') || bufwinnr(t:NERDTreeBufName) == -1
+      NERDTree
+    endif
   endif
 endfunction
 " toggle nerdtree tab with the current file selected
@@ -224,9 +228,6 @@ nmap <silent> ,t :call NERDTreeFindToggle()<CR>
 let NERDTreeShowHidden = 1
 let NERDTreeDirArrows = 1
 let NERDTreeMouseMode = 2
-"autocmd FileType nerdtree setlocal nolist
-"hi Directory ctermfg=darkred
-autocmd FileType nerdtree highlight Directory ctermfg=darkred
 
 """ vim-fugitive {{{1
 nnoremap <silent> gb :Gblame<CR>
@@ -417,7 +418,6 @@ let g:yankring_replace_n_nkey = '<m-f>'
 let g:yankring_replace_n_pkey = '<m-r>'
 
 """ vim-instant-markdown {{{1
-autocmd FileType markdown nnoremap <C-m> :InstantMarkdownPreview<CR>
 let g:instant_markdown_autostart = 0
 let g:instant_markdown_allow_unsafe_content = 1
 
@@ -476,13 +476,23 @@ set expandtab
 " indicate tab characters and trailing spaces
 set list lcs=tab:\|\ ,trail:\|
 
-" file types with tab length exceptions {{{1
-autocmd FileType markdown setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType typescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType coffee setlocal shiftwidth=2 tabstop=2 softtabstop=2
+" filetype-specific settings {{{1
+augroup FileTypeStuff
+  autocmd!
+  autocmd FileType markdown nnoremap <C-m> :InstantMarkdownPreview<CR>
+  autocmd FileType nerdtree setlocal nolist
+  autocmd FileType nerdtree highlight Directory ctermfg=darkred
+  autocmd FileType gitcommit let g:gutentags_enabled = 0
+  autocmd FileType gitrebase let g:gutentags_enabled = 0
+
+  " file types with tab length exceptions
+  autocmd FileType markdown setlocal shiftwidth=2 tabstop=2 softtabstop=2
+  autocmd FileType html setlocal shiftwidth=2 tabstop=2 softtabstop=2
+  autocmd FileType htmldjango setlocal shiftwidth=2 tabstop=2 softtabstop=2
+  autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+  autocmd FileType typescript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+  autocmd FileType coffee setlocal shiftwidth=2 tabstop=2 softtabstop=2
+augroup END
 
 " todo / fixme list {{{1
 command! TODOList noautocmd silent! vimgrep /TODO\|FIXME/j % | cw
@@ -583,9 +593,8 @@ augroup MyMiscStuff
   autocmd BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
   autocmd BufWritePost *.exs silent :!mix format --check-equivalent %
   autocmd BufWritePost *.ex silent :!mix format --check-equivalent %
-  autocmd FileType gitcommit let g:gutentags_enabled = 0
-  autocmd FileType gitrebase let g:gutentags_enabled = 0
 augroup END
+
 " always show status bar
 set ls=2
 
@@ -633,6 +642,10 @@ set pastetoggle=<F2>
 " do not change directory
 set noautochdir
 
+" spelling check
+set spelllang=en
+" set spell
+
 "" Personal Key Mappings {{{1
 function! GoPrevious()
   if &diff
@@ -675,3 +688,5 @@ nnoremap gV `[v`]
 " formatting html
 nnoremap ,= :s/<[^>]*>/\r&\r/g<CR>:g/^$/d<CR>gg=G
 nnoremap <C-f> :Ag 
+
+" vim: foldenable foldmethod=marker foldcolumn=1
