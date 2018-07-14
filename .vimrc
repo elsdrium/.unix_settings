@@ -23,7 +23,9 @@ Plug 'tpope/vim-repeat'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'wsdjeg/FlyGrep.vim', { 'commit': '58d2054' }
+Plug 'osyo-manga/vim-over'
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+Plug 'kshenoy/vim-signature'
 
 " colorscheme
 Plug 'flazz/vim-colorschemes'
@@ -312,6 +314,13 @@ command! -bang -nargs=* Ag
       \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
       \                 <bang>0)
 
+""" vim-over {{{1
+let g:over#command_line#search#enable_move_cursor = 1
+nnoremap ,r :OverCommandLine<CR>%s/
+
+""" undotree {{{1
+nnoremap U :UndotreeToggle<CR>
+
 """ ale {{{1
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
@@ -323,42 +332,6 @@ let g:ale_fixers = {
       \   'javascript': ['eslint'],
       \}
 let g:ale_cpp_clang_options = '-std=c++14 -Wall'
-
-if has("cscope")
-  set csverb
-  " Use quickfix window to show cscope results
-  " no 'g-' here for preventing disable tag stack
-  set cscopequickfix=s-,c-,d-,i-,t-,e-
-  " Use both cscope and ctag
-  set cscopetag
-  " Use tags for definition search first
-  set cscopetagorder=1
-  " Use absolute path
-  set nocsre
-
-  function! CscopeQueryQF(qtype)
-    if &ft == 'qf'
-      cclose
-      return
-    endif
-    call setqflist([])
-    let wview = winsaveview()
-    let fname = @%
-    exe "normal! mY"
-    silent! keepjumps exe "cs find " . a:qtype . " " . expand("<cword>")
-    if fname != @%
-      exe "normal! `Y"
-      bd #
-    endif
-    call winrestview(wview)
-    botright cw
-  endfunction
-
-  nnoremap ;s :call CscopeQueryQF("s")<CR>
-  nnoremap ;g :call CscopeQueryQF("g")<CR>
-  nnoremap ;c :call CscopeQueryQF("c")<CR>
-  nnoremap ;d :call CscopeQueryQF("d")<CR>
-endif
 
 """ vim-rooter {{{1
 let g:rooter_patterns = ['.project_root', '.git/']
@@ -494,6 +467,43 @@ augroup FileTypeStuff
   autocmd FileType coffee setlocal shiftwidth=2 tabstop=2 softtabstop=2
 augroup END
 
+" cscope settings
+if has("cscope")
+  set csverb
+  " Use quickfix window to show cscope results
+  " no 'g-' here for preventing disable tag stack
+  set cscopequickfix=s-,c-,d-,i-,t-,e-
+  " Use both cscope and ctag
+  set cscopetag
+  " Use tags for definition search first
+  set cscopetagorder=1
+  " Use absolute path
+  set nocsre
+
+  function! CscopeQueryQF(qtype)
+    if &ft == 'qf'
+      cclose
+      return
+    endif
+    call setqflist([])
+    let wview = winsaveview()
+    let fname = @%
+    exe "normal! mY"
+    silent! keepjumps exe "cs find " . a:qtype . " " . expand("<cword>")
+    if fname != @%
+      exe "normal! `Y"
+      bd #
+    endif
+    call winrestview(wview)
+    botright cw
+  endfunction
+
+  nnoremap ;s :call CscopeQueryQF("s")<CR>
+  nnoremap ;g :call CscopeQueryQF("g")<CR>
+  nnoremap ;c :call CscopeQueryQF("c")<CR>
+  nnoremap ;d :call CscopeQueryQF("d")<CR>
+endif
+
 " todo / fixme list {{{1
 command! TODOList noautocmd silent! vimgrep /TODO\|FIXME/j % | cw
 function! ToggleTODOList()
@@ -545,10 +555,10 @@ if has('clipboard')
   set clipboard=unnamed
 endif
 
-" folding setting {{{1
-set foldenable
-set foldmethod=marker
-set foldcolumn=1
+" folding settings {{{1
+" set foldenable
+" set foldmethod=marker
+" set foldcolumn=1
 
 " search ctags file upward
 set tags=./tags;
@@ -669,9 +679,11 @@ imap <C-]> <C-o>l
 nmap ;vl :vertical res +10<CR>
 nmap ;vs :vertical res -10 <CR>
 noremap <silent> ,, <Esc>:bnext<CR>
-noremap <silent> <M-PageDown> <Esc>:bnext<CR>
+noremap <silent> <M-j> <Esc>:bnext<CR>
 noremap <silent> ,. <Esc>:bprevious<CR>
-noremap <silent> <M-PageUp> <Esc>:bprevious<CR>
+noremap <silent> <M-k> <Esc>:bprevious<CR>
+noremap <silent> <M-l> <Esc>gt
+noremap <silent> <M-h> <Esc>gT
 noremap <silent> ,<Space> <Esc>:e#<CR>
 noremap <C-s> <Esc>:e!<CR>
 inoremap <C-s> <Esc>:e!<CR>
