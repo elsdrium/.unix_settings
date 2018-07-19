@@ -581,11 +581,10 @@ set cul
 set history=100
 set wrap
 set nu
-"set foldmethod=indent
-"set foldenable
 set autoindent
 "set cursorline
 set showcmd
+set nojoinspaces
 set wildmenu
 set lazyredraw
 " better detection for shortmess c
@@ -597,9 +596,10 @@ endif
 augroup MyMiscStuff
   autocmd!
   autocmd! Syntax python :syn keyword Keyword self
+  autocmd VimResized * wincmd =
   " auto-close quickfix window if it's the last one
   autocmd WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
-  "Restore cursor position in previous editing session
+  " Restore cursor position in previous editing session
   autocmd BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
   autocmd BufWritePost *.exs silent :!mix format --check-equivalent %
   autocmd BufWritePost *.ex silent :!mix format --check-equivalent %
@@ -678,6 +678,8 @@ nmap <CR><CR> o<Esc>
 imap <C-]> <C-o>l
 nmap ;vl :vertical res +10<CR>
 nmap ;vs :vertical res -10 <CR>
+nnoremap <M-[> :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
+nnoremap <M-]> :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>
 noremap <silent> ,, <Esc>:bnext<CR>
 noremap <silent> <M-j> <Esc>:bnext<CR>
 noremap <silent> ,. <Esc>:bprevious<CR>
@@ -685,6 +687,7 @@ noremap <silent> <M-k> <Esc>:bprevious<CR>
 noremap <silent> <M-l> <Esc>gt
 noremap <silent> <M-h> <Esc>gT
 noremap <silent> ,<Space> <Esc>:e#<CR>
+nnoremap <silent> <C-g> :tag<CR>
 noremap <C-s> <Esc>:e!<CR>
 inoremap <C-s> <Esc>:e!<CR>
 inoremap ;; <Esc>

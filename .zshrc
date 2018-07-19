@@ -167,8 +167,7 @@ alias grep='grep --color=auto -n'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias fpp='fpp --keep-open'
-alias vim='vim -O'
-alias nv='nvim -O'
+alias nv='nvim'
 alias nvdiff='nvim -d'
 alias rv='v +PlugUpdate +qall'
 alias rrv='v +PlugClean +PlugUpdate +PlugInstall +qall'
@@ -192,11 +191,11 @@ unalias grv
 if ! type nvim &> /dev/null; then
     export VISUAL="vi"
     export EDITOR="vi"
-    alias v='vim -O'
+    alias v='vim'
 else
     export VISUAL="nvim"
     export EDITOR="nvim"
-    alias v='nvim -O'
+    alias v='nvim'
 fi
 
 NORMAL_SYMBOL='@'
