@@ -9,68 +9,41 @@ call plug#begin('~/.vim/plugged') " required
 " Vim enhancement
 Plug 'vim-scripts/IndexedSearch'
 Plug 'vim-scripts/matchit.zip'
-silent! Plug 'vim-scripts/YankRing.vim'
 Plug 'mhinz/vim-startify'
-Plug 't9md/vim-choosewin'
 Plug 'tpope/vim-surround'
-Plug 'jiangmiao/auto-pairs'
-Plug 'itchyny/vim-cursorword'
-Plug 'kien/tabman.vim'
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'bling/vim-bufferline'
 Plug 'tpope/vim-repeat'
+Plug 'itchyny/vim-cursorword'
+Plug 'flazz/vim-colorschemes'
+Plug 'bling/vim-bufferline'
+Plug 'kshenoy/vim-signature'
+Plug 'elsdrium/vim-sleuth'
+
+silent! Plug 'vim-scripts/YankRing.vim'
+Plug 't9md/vim-choosewin'
+Plug 'jiangmiao/auto-pairs'
+Plug 'kien/tabman.vim'
+Plug 'vim-airline/vim-airline-themes' | Plug 'bling/vim-airline'
 Plug 'Lokaltog/vim-easymotion'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 Plug 'osyo-manga/vim-over'
 Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
-Plug 'kshenoy/vim-signature'
-
-" colorscheme
-Plug 'flazz/vim-colorschemes'
-" Plug 'liuchengxu/space-vim-dark'
-
-" Python
-"Plug 'elsdrium/vim-debug'  " It's awesome, but shortcut keys conflict to other plugins...
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-
-" Scala
-Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
-
-" Elixir
-Plug 'elixir-editors/vim-elixir'
-
-" Javascript
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'ternjs/tern_for_vim', { 'do': 'npm install', 'for': 'javascript' }
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
-
-" LaTeX
-"Plug 'LaTeX-Box-Team/LaTeX-Box'
-"Plug 'gerw/vim-latex-suite'
-"Plug 'xuhdev/vim-latex-live-preview'
-
-" Markdown
-Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
-"Plug 'suan/vim-instant-markdown', { 'do': 'npm -g install instant-markdown-d', 'for': 'markdown' }
-
-" Git
-Plug 'tpope/vim-fugitive'
 
 " Development
 "Plug 'elsdrium/Conque-Shell'
-Plug 'elsdrium/vim-sleuth'
 Plug 'airblade/vim-rooter', { 'on': 'Rooter' }
 Plug 'matze/vim-move'
 Plug 'godlygeek/tabular', { 'on': 'Tab' }
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
-Plug 'jistr/vim-nerdtree-tabs' | Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeFind', 'NERDTree'] }
+Plug 'jistr/vim-nerdtree-tabs' | Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeFind'] }
 Plug 'scrooloose/nerdcommenter'
 Plug 'Yggdroot/indentLine'
 "Plug 'jeaye/color_coded', { 'do': 'cmake . && make && make install', 'for': ['c', 'cpp', 'objc', 'objcpp'] }
 Plug 'junegunn/vim-easy-align'
+Plug 'christoomey/vim-tmux-navigator'
+
+if v:version > 704 || (v:version == 704 && has('patch1578'))
+  Plug 'elsdrium/YouCompleteMe', { 'do': './install.py --clang-completer', 'for': 'cpp' }
+endif
 
 if v:version >= 800
   Plug 'w0rp/ale', { 'on': 'ALEEnable' }
@@ -85,54 +58,44 @@ else
   Plug 'Shougo/neocomplete.vim'
 endif
 
-if v:version > 704 || (v:version == 704 && has('patch1578'))
-  Plug 'elsdrium/YouCompleteMe', { 'do': './install.py --clang-completer', 'for': 'cpp' }
-endif
+" Git
+Plug 'tpope/vim-fugitive'
+
+" Python
+"Plug 'elsdrium/vim-debug'  " It's awesome, but shortcut keys conflict to other plugins
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+
+" Markdown
+Plug 'suan/vim-instant-markdown', { 'for': 'markdown' }
+"Plug 'suan/vim-instant-markdown', { 'do': 'npm -g install instant-markdown-d', 'for': 'markdown' }
+
+" Javascript
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install', 'for': 'javascript' }
+Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+
+" Elixir
+Plug 'elixir-editors/vim-elixir'
+
+" Scala
+Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
+
+" LaTeX
+"Plug 'LaTeX-Box-Team/LaTeX-Box'
+"Plug 'gerw/vim-latex-suite'
+"Plug 'xuhdev/vim-latex-live-preview'
 
 call plug#end() " required
 " }}}
 
 "" Plugins' Settings
-""" vim-easymotion {{{1
-let g:EasyMotion_leader_key = '\'
-nmap <Leader>v <Plug>(easymotion-bd-w)
-
-""" vim-airline {{{1
-let g:airline_powerline_fonts = 0
-let g:airline_theme = 'kalisi'
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#branch#enabled = 1
-let g:airline#extensions#branch#vcs_priority = ["git", "mercurial"]
-let g:airline#extensions#branch#empty_message = ''
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
-let g:airline#extensions#ale#enabled = 1
-let g:airline#extensions#gutentags#enabled = 1
-
-""" deoplete.nvim {{{1
-let g:deoplete#enable_at_startup = 1
-augroup MyDeoplete
-  autocmd!
-  autocmd CompleteDone * silent! pclose!
-augroup END
-
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ deoplete#mappings#manual_complete()
-function! s:check_back_space() abort "{{{
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction"}}}
-
-""" NERDCommenter {{{1
-let g:NERDSpaceDelims = 1
-
-""" UltiSnips {{{1
-let g:UltiSnipsExpandTrigger='<Leader><TAB>'
-let g:UltiSnipsJumpForwardTrigger='<C-g>'
-let g:UltiSnipsJumpBackwardTrigger='<C-t>'
-let g:UltiSnipsListSnippets=',ls'
+""" YankRing.vim {{{1
+nnoremap <silent> ,y :YRShow<CR>
+let g:yankring_history_dir = '~/.vim/dirs/'
+" Useless, just for avoiding conflicts
+let g:yankring_replace_n_nkey = '<m-f>'
+let g:yankring_replace_n_pkey = '<m-r>'
 
 """ vim-choosewin {{{1
 nmap  -  <Plug>(choosewin)
@@ -147,94 +110,21 @@ let g:choosewin_overlay_enable = 1
 let g:tabman_toggle = 'tm'
 let g:tabman_focus  = 'tf'
 
-""" tagbar {{{1
-" toggle tagbar display
-nmap <silent> tb :TagbarToggle<CR>
-" autofocus on tagbar open
-let g:tagbar_autofocus = 1
-let tagbar_map_closefold = ['zc']
-let tagbar_map_openfold = ['zo']
+""" vim-airline {{{1
+let g:airline_powerline_fonts = 0
+let g:airline_theme = 'kalisi'
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#branch#vcs_priority = ["git", "mercurial"]
+let g:airline#extensions#branch#empty_message = ''
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#gutentags#enabled = 1
 
-let g:tagbar_type_typescript = {
-      \ 'ctagstype': 'typescript',
-      \ 'kinds': [
-      \ 'c:classes',
-      \ 'n:modules',
-      \ 'f:functions',
-      \ 'v:variables',
-      \ 'v:varlambdas',
-      \ 'm:members',
-      \ 'i:interfaces',
-      \ 'e:enums',
-      \ ]
-      \ }
-
-let g:tagbar_type_elixir = {
-      \ 'ctagstype' : 'elixir',
-      \ 'kinds' : [
-      \ 'f:functions',
-      \ 'functions:functions',
-      \ 'c:callbacks',
-      \ 'd:delegates',
-      \ 'e:exceptions',
-      \ 'i:implementations',
-      \ 'a:macros',
-      \ 'o:operators',
-      \ 'm:modules',
-      \ 'p:protocols',
-      \ 'r:records',
-      \ 't:tests'
-      \ ]
-      \ }
-
-""" vim-gutentags {{{1
-let $GTAGSLABEL = 'native-pygments'
-let $GTAGSCONF = '/usr/local/share/gtags/gtags.conf'
-nnoremap gu :GutentagsUpdate<CR>
-let g:gutentags_cache_dir = expand('~/.cache/tags')
-let g:gutentags_ctags_executable = 'ctags'
-let g:gutentags_ctags_tagfile = '.tags'
-let g:gutentags_project_root = ['.project_root']
-let g:gutentags_resolve_symlinks = 1
-let gutentags_define_advanced_commands = 1
-
-let g:gutentags_modules = []
-if executable('ctags')
-  let g:gutentags_modules += ['ctags']
-endif
-if executable('gtags-cscope') && executable('gtags')
-  let g:gutentags_modules += ['gtags_cscope']
-  " Use gtags-cscope instead of classic cscope, if possible
-  silent! set cscopeprg=gtags-cscope
-endif
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q', '--c++-kinds=+px', '--c-kinds=+px']
-" for universal ctags
-let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
-
-""" vim-nerdtree-tabs / nerdtree {{{1
-function! NERDTreeFindToggle()
-  if exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1
-    NERDTreeTabsClose
-  else
-    NERDTreeFind
-    " if not found
-    if !exists('t:NERDTreeBufName') || bufwinnr(t:NERDTreeBufName) == -1
-      NERDTree
-    endif
-  endif
-endfunction
-" toggle nerdtree tab with the current file selected
-nmap <silent> ,t :call NERDTreeFindToggle()<CR>
-" don;t show these file types
-"let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
-let NERDTreeShowHidden = 1
-let NERDTreeDirArrows = 1
-let NERDTreeMouseMode = 2
-
-""" vim-fugitive {{{1
-nnoremap <silent> gb :Gblame<CR>
-" diff with HEAD (overrided default behavior for starting select mode)
-nnoremap gh :Gdiff HEAD
+""" vim-easymotion {{{1
+let g:EasyMotion_leader_key = '\'
+nmap <Leader>v <Plug>(easymotion-bd-w)
 
 """ fzf.vim {{{1
 let $FZF_DEFAULT_OPTS = '--bind ctrl-a:select-all'
@@ -321,18 +211,6 @@ nnoremap ,r :OverCommandLine<CR>%s/
 """ undotree {{{1
 nnoremap U :UndotreeToggle<CR>
 
-""" ale {{{1
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
-let g:ale_open_list = 0
-let g:ale_fixers = {
-      \   'c': ['clang'],
-      \   'cpp': ['clang'],
-      \   'python': ['flake8'],
-      \   'javascript': ['eslint'],
-      \}
-let g:ale_cpp_clang_options = '-std=c++14 -Wall'
-
 """ vim-rooter {{{1
 let g:rooter_patterns = ['.project_root', '.git/']
 let g:rooter_use_lcd = 1
@@ -365,6 +243,69 @@ function! s:align()
   endif
 endfunction
 
+""" tagbar {{{1
+" toggle tagbar display
+nmap <silent> tb :TagbarToggle<CR>
+" autofocus on tagbar open
+let g:tagbar_autofocus = 1
+let tagbar_map_closefold = ['zc']
+let tagbar_map_openfold = ['zo']
+
+let g:tagbar_type_typescript = {
+      \ 'ctagstype': 'typescript',
+      \ 'kinds': [
+      \ 'c:classes',
+      \ 'n:modules',
+      \ 'f:functions',
+      \ 'v:variables',
+      \ 'v:varlambdas',
+      \ 'm:members',
+      \ 'i:interfaces',
+      \ 'e:enums',
+      \ ]
+      \ }
+
+let g:tagbar_type_elixir = {
+      \ 'ctagstype' : 'elixir',
+      \ 'kinds' : [
+      \ 'f:functions',
+      \ 'functions:functions',
+      \ 'c:callbacks',
+      \ 'd:delegates',
+      \ 'e:exceptions',
+      \ 'i:implementations',
+      \ 'a:macros',
+      \ 'o:operators',
+      \ 'm:modules',
+      \ 'p:protocols',
+      \ 'r:records',
+      \ 't:tests'
+      \ ]
+      \ }
+
+""" vim-nerdtree-tabs / nerdtree {{{1
+function! NERDTreeFindToggle()
+  if exists('t:NERDTreeBufName') && bufwinnr(t:NERDTreeBufName) != -1
+    NERDTreeTabsClose
+  else
+    NERDTreeFind
+    " if not found
+    if !exists('t:NERDTreeBufName') || bufwinnr(t:NERDTreeBufName) == -1
+      NERDTree
+    endif
+  endif
+endfunction
+" toggle nerdtree tab with the current file selected
+nmap <silent> ,t :call NERDTreeFindToggle()<CR>
+" don;t show these file types
+"let NERDTreeIgnore = ['\.pyc$', '\.pyo$']
+let NERDTreeShowHidden = 1
+let NERDTreeDirArrows = 1
+let NERDTreeMouseMode = 2
+
+""" NERDCommenter {{{1
+let g:NERDSpaceDelims = 1
+
 """ indentLine {{{1
 let g:indentLine_color_term = 239
 
@@ -374,25 +315,8 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-""" jedi-vim {{{1
-"let g:jedi#force_py_version = 3
-let g:jedi#completions_command = '<TAB>'
-let g:jedi#show_call_signatures = 1
-let g:jedi#show_call_signatures_delay = 50
-if has('python3')
-  let g:jedi#force_py_version = 3
-endif
-
-""" YankRing.vim {{{1
-nnoremap <silent> ,y :YRShow<CR>
-let g:yankring_history_dir = '~/.vim/dirs/'
-" Useless, just for avoiding conflicts
-let g:yankring_replace_n_nkey = '<m-f>'
-let g:yankring_replace_n_pkey = '<m-r>'
-
-""" vim-instant-markdown {{{1
-let g:instant_markdown_autostart = 0
-let g:instant_markdown_allow_unsafe_content = 1
+""" vim-tmux-navigator {{{1
+let g:tmux_navigator_disable_when_zoomed = 1
 
 """ YouCompleteMe {{{1
 "check syntax with other plugins instead
@@ -427,6 +351,82 @@ let g:ycm_filetype_blacklist = {
 " Go to Definition variable
 nnoremap <Leader>gd :YcmCompleter GoToDeclaration<CR>
 nnoremap <Leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+""" ale {{{1
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+let g:ale_open_list = 0
+let g:ale_fixers = {
+      \   'c': ['clang'],
+      \   'cpp': ['clang'],
+      \   'python': ['flake8'],
+      \   'javascript': ['eslint'],
+      \}
+let g:ale_cpp_clang_options = '-std=c++14 -Wall'
+
+""" deoplete.nvim {{{1
+let g:deoplete#enable_at_startup = 1
+augroup MyDeoplete
+  autocmd!
+  autocmd CompleteDone * silent! pclose!
+augroup END
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ deoplete#mappings#manual_complete()
+function! s:check_back_space() abort "{{{
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction"}}}
+
+""" UltiSnips {{{1
+let g:UltiSnipsExpandTrigger='<Leader><TAB>'
+let g:UltiSnipsJumpForwardTrigger='<C-g>'
+let g:UltiSnipsJumpBackwardTrigger='<C-t>'
+let g:UltiSnipsListSnippets=',ls'
+
+""" vim-gutentags {{{1
+let $GTAGSLABEL = 'native-pygments'
+let $GTAGSCONF = '/usr/local/share/gtags/gtags.conf'
+nnoremap gu :GutentagsUpdate<CR>
+let g:gutentags_cache_dir = expand('~/.cache/tags')
+let g:gutentags_ctags_executable = 'ctags'
+let g:gutentags_ctags_tagfile = '.tags'
+let g:gutentags_project_root = ['.project_root']
+let g:gutentags_resolve_symlinks = 1
+let gutentags_define_advanced_commands = 1
+
+let g:gutentags_modules = []
+if executable('ctags')
+  let g:gutentags_modules += ['ctags']
+endif
+if executable('gtags-cscope') && executable('gtags')
+  let g:gutentags_modules += ['gtags_cscope']
+  " Use gtags-cscope instead of classic cscope, if possible
+  silent! set cscopeprg=gtags-cscope
+endif
+let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q', '--c++-kinds=+px', '--c-kinds=+px']
+" for universal ctags
+let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
+
+""" vim-fugitive {{{1
+nnoremap <silent> gb :Gblame<CR>
+" diff with HEAD (overrided default behavior for starting select mode)
+nnoremap gh :Gdiff HEAD
+
+""" jedi-vim {{{1
+"let g:jedi#force_py_version = 3
+let g:jedi#completions_command = '<TAB>'
+let g:jedi#show_call_signatures = 1
+let g:jedi#show_call_signatures_delay = 50
+if has('python3')
+  let g:jedi#force_py_version = 3
+endif
+
+""" vim-instant-markdown {{{1
+let g:instant_markdown_autostart = 0
+let g:instant_markdown_allow_unsafe_content = 1
 
 """ tern_for_vim {{{1
 let g:tern#is_show_argument_hints_enabled = 1
@@ -657,35 +657,29 @@ set spelllang=en
 " set spell
 
 "" Personal Key Mappings {{{1
-function! GoPrevious()
-  if &diff
-    silent! exe ":normal! [c"
+function! Conditional(cond, if, else)
+  if a:cond
+    silent! exe ":" . a:if
   else
-    silent! exe ":cprevious"
+    silent! exe ":" . a:else
   endif
 endfunction
-function! GoNext()
-  if &diff
-    silent! exe ":normal! ]c"
-  else
-    silent! exe ":cnext"
-  endif
-endfunction
-nnoremap <silent> <C-p> :call GoPrevious()<CR>
-nnoremap <silent> <C-n> :call GoNext()<CR>
+nnoremap <silent> <F3> :call Conditional(&spell, 'set nospell', 'set spell')<CR>
+nnoremap <silent> <C-p> :call Conditional(&diff, 'normal! [c', 'cprevious')<CR>
+nnoremap <silent> <C-n> :call Conditional(&diff, 'normal! ]c', 'cnext')<CR>
+noremap <silent> <M-l> <Esc>:call Conditional(tabpagenr('$') > 1, 'tabnext', 'bnext')<CR>
+noremap <silent> <M-h> <Esc>:call Conditional(tabpagenr('$') > 1, 'tabprevious', 'bprevious')<CR>
 
 nmap <CR><CR> o<Esc>
 imap <C-]> <C-o>l
 nmap ;vl :vertical res +10<CR>
 nmap ;vs :vertical res -10 <CR>
-nnoremap <M-[> :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
-nnoremap <M-]> :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>
+nnoremap <M-j> :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%>' . line('.') . 'l\S', 'e')<CR>
+nnoremap <M-k> :call search('^'. matchstr(getline('.'), '\(^\s*\)') .'\%<' . line('.') . 'l\S', 'be')<CR>
 noremap <silent> ,, <Esc>:bnext<CR>
-noremap <silent> <M-j> <Esc>:bnext<CR>
+noremap <silent> <M-,> <Esc>:bnext<CR>
 noremap <silent> ,. <Esc>:bprevious<CR>
-noremap <silent> <M-k> <Esc>:bprevious<CR>
-noremap <silent> <M-l> <Esc>gt
-noremap <silent> <M-h> <Esc>gT
+noremap <silent> <M-.> <Esc>:bprevious<CR>
 noremap <silent> ,<Space> <Esc>:e#<CR>
 nnoremap <silent> <C-g> :tag<CR>
 noremap <C-s> <Esc>:e!<CR>
@@ -698,7 +692,7 @@ inoremap ,. <Esc>I
 nnoremap ,cd :cd %:p:h<CR>:pwd<CR>
 vnoremap // y/<C-R>"<CR> 
 vnoremap <C-c> "+y
-nnoremap <F3> :call deoplete#toggle()<CR>
+nnoremap <F4> :call deoplete#toggle()<CR>
 nnoremap gV `[v`]
 " formatting html
 nnoremap ,= :s/<[^>]*>/\r&\r/g<CR>:g/^$/d<CR>gg=G
