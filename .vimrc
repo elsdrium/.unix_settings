@@ -77,6 +77,7 @@ Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 
 " Elixir
 Plug 'elixir-editors/vim-elixir'
+Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
 
 " Scala
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
@@ -434,6 +435,9 @@ nnoremap <silent> td :TernDoc<CR>
 
 """ typescript-vim {{{1
 let g:typescript_indent_disable = 1
+
+""" alchemist.vim
+let g:alchemist_tag_disable = 1
 
 " End of plugins' settings -------------------------- }}}
 

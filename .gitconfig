@@ -32,3 +32,5 @@
 [mergetool "nvimdiff"]
     prompt = false
     cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c '$wincmd J'
+[tig "bind"]
+    generic = D !git difftool --no-prompt --trust-exit-code %(commit)^!
