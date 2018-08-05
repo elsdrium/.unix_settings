@@ -189,14 +189,26 @@ unalias grv
 
 # neovim is preferred, otherwise fall back to vi
 if ! type nvim &> /dev/null; then
-    export VISUAL="vi"
-    export EDITOR="vi"
-    alias v='vim'
+    export VISUAL="vim"
+    export EDITOR="vim"
 else
     export VISUAL="nvim"
     export EDITOR="nvim"
-    alias v='nvim'
 fi
+
+v() {
+    local args=("$@")
+    for file in "${args[@]}"; do
+        [[ $file = -* ]] && continue   # Ignore options.
+
+        if ! [[ -e $file ]]; then
+            printf '%s: cannot access %s: No such file or directory\n' "$EDITOR" "$file" >&2
+            return 1
+        fi
+    done
+    # Use `command' to invoke the vim binary
+    command "$EDITOR" "${args[@]}"
+}
 
 NORMAL_SYMBOL='@'
 INSERT_SYMBOL='@'
