@@ -86,7 +86,7 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git gitfast github vi-mode ssh-agent sudo incr)
+plugins=(git gitfast github vi-mode ssh-agent sudo incr mix)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -199,7 +199,8 @@ fi
 v() {
     local args=("$@")
     for file in "${args[@]}"; do
-        [[ $file = -* ]] && continue   # Ignore options.
+        [[ $file = -* ]] && continue   # Ignore options
+        [[ $file = +* ]] && continue   # Ignore line number
 
         if ! [[ -e $file ]]; then
             printf '%s: cannot access %s: No such file or directory\n' "$EDITOR" "$file" >&2
