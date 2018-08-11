@@ -8,7 +8,7 @@ call plug#begin('~/.vim/plugged') " required
 
 " Vim enhancement
 Plug 'vim-scripts/IndexedSearch'
-Plug 'vim-scripts/matchit.zip'
+Plug 'andymass/vim-matchup'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -649,6 +649,9 @@ set backspace=2
 
 " support 256 colors
 set t_Co=256 "
+
+" list of menu_flags specifying which commands wrap to another line
+set whichwrap=b,h,l,<,>,[,]
 
 " use F2 as pastetoggle
 set pastetoggle=<F2>

@@ -200,7 +200,7 @@ v() {
     local args=("$@")
     for file in "${args[@]}"; do
         [[ $file = -* ]] && continue   # Ignore options
-        [[ $file = +* ]] && continue   # Ignore line number
+        [[ $file = +* ]] && continue   # Ignore vim commands
 
         if ! [[ -e $file ]]; then
             printf '%s: cannot access %s: No such file or directory\n' "$EDITOR" "$file" >&2
