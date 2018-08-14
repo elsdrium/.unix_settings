@@ -9,7 +9,7 @@ if [[ -z ${TARGET_WIN} ]]; then
 fi
 
 if [[ -z ${TARGET_PANE} ]]; then
-    TARGET_PANE="0:0.1"
+    TARGET_PANE="0:${TARGET_WIN}.0"
 fi
 
 if [[ -z ${SEND_KEYS} ]]; then
