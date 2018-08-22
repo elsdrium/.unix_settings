@@ -82,6 +82,10 @@ Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
 " Scala
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 
+" Recognize file types
+Plug 'hashivim/vim-terraform' " Terraform
+Plug 'Glench/Vim-Jinja2-Syntax' " Jinja2
+
 " LaTeX
 "Plug 'LaTeX-Box-Team/LaTeX-Box'
 "Plug 'gerw/vim-latex-suite'
@@ -661,7 +665,6 @@ set noautochdir
 
 " spelling check
 set spelllang=en
-" set spell
 
 "" Personal Key Mappings {{{1
 function! Conditional(cond, if, else)
@@ -674,8 +677,8 @@ endfunction
 nnoremap <silent> <F3> :call Conditional(&spell, 'set nospell', 'set spell')<CR>
 nnoremap <silent> <C-p> :call Conditional(&diff, 'normal! [c', 'cprevious')<CR>
 nnoremap <silent> <C-n> :call Conditional(&diff, 'normal! ]c', 'cnext')<CR>
-noremap <silent> <M-l> <Esc>:call Conditional(tabpagenr('$') > 1, 'tabnext', 'bnext')<CR>
-noremap <silent> <M-h> <Esc>:call Conditional(tabpagenr('$') > 1, 'tabprevious', 'bprevious')<CR>
+noremap <silent> <M-l> <Esc>:call Conditional(tabpagenr('$') > 1, 'tabnext', &list ? 'bnext' : '')<CR>
+noremap <silent> <M-h> <Esc>:call Conditional(tabpagenr('$') > 1, 'tabprevious', &list ? 'bprevious' : '')<CR>
 
 nmap <CR><CR> o<Esc>
 imap <C-]> <C-o>l
