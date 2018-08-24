@@ -98,9 +98,8 @@ call plug#end() " required
 """ YankRing.vim {{{1
 nnoremap <silent> ,y :YRShow<CR>
 let g:yankring_history_dir = '~/.vim/dirs/'
-" Useless, just for avoiding conflicts
-let g:yankring_replace_n_nkey = '<m-f>'
-let g:yankring_replace_n_pkey = '<m-r>'
+let g:yankring_replace_n_nkey = ',R'
+let g:yankring_replace_n_pkey = ',r'
 
 """ vim-choosewin {{{1
 nmap  -  <Plug>(choosewin)
@@ -211,7 +210,7 @@ command! -bang -nargs=* Ag
 
 """ vim-over {{{1
 let g:over#command_line#search#enable_move_cursor = 1
-nnoremap ,r :OverCommandLine<CR>%s/
+nnoremap ,S :OverCommandLine<CR>%s/
 
 """ undotree {{{1
 nnoremap U :UndotreeToggle<CR>
