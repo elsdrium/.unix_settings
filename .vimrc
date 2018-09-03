@@ -60,6 +60,7 @@ endif
 
 " Git
 Plug 'tpope/vim-fugitive'
+Plug 'jreybert/vimagit', { 'on': 'Magit' }
 
 " Python
 "Plug 'elsdrium/vim-debug'  " It's awesome, but shortcut keys conflict to other plugins
@@ -678,6 +679,13 @@ nnoremap <silent> <C-p> :call Conditional(&diff, 'normal! [c', 'cprevious')<CR>
 nnoremap <silent> <C-n> :call Conditional(&diff, 'normal! ]c', 'cnext')<CR>
 noremap <silent> <M-l> <Esc>:call Conditional(tabpagenr('$') > 1, 'tabnext', &list ? 'bnext' : '')<CR>
 noremap <silent> <M-h> <Esc>:call Conditional(tabpagenr('$') > 1, 'tabprevious', &list ? 'bprevious' : '')<CR>
+
+" for git merge tool
+if &diff
+  nnoremap ,re :diffget REMOTE<CR>
+  nnoremap ,lo :diffget LOCAL<CR>
+  nnoremap ,ba :diffget BASE<CR>
+endif
 
 nmap <CR><CR> o<Esc>
 imap <C-]> <C-o>l
