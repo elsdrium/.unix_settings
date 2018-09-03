@@ -86,7 +86,7 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git gitfast github vi-mode ssh-agent sudo incr mix)
+plugins=(git gitfast github vi-mode ssh-agent sudo incr mix aws)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -221,3 +221,5 @@ export NVM_DIR="$HOME/.nvm"
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
 if [[ -f ~/.machine_config ]]; then; source ~/.machine_config; fi
+
+if [[ -f /usr/local/bin/aws_zsh_completer.sh ]]; then; source /usr/local/bin/aws_zsh_completer.sh; fi

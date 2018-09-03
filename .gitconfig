@@ -22,15 +22,15 @@
     default = simple
 [difftool]
     prompt = true
+[difftool "nvimdiff"]
+    cmd = nvim -d -u ~/.vimrc $LOCAL $REMOTE
 [diff]
     tool = nvimdiff
-[difftool "nvimdiff"]
-    cmd = "nvim -d -u ~/.vimrc \"$LOCAL\" \"$REMOTE\""
+[mergetool "nvimdiff"]
+    prompt = false
+    cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [merge]
     tool = nvimdiff
     conflictstyle = diff3
-[mergetool "nvimdiff"]
-    prompt = false
-    cmd = nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c '$wincmd J'
 [tig "bind"]
     generic = D !git difftool --no-prompt --trust-exit-code %(commit)^!
