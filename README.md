@@ -14,7 +14,7 @@ Settings for tools in Unix-like environments.
 ## Installation
 
 ```
-zsh install.sh [--use-nvim]
+zsh install.sh
 ```
 
 ## Contributing

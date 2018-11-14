@@ -42,7 +42,7 @@ Plug 'junegunn/vim-easy-align'
 Plug 'christoomey/vim-tmux-navigator'
 
 if v:version > 704 || (v:version == 704 && has('patch1578'))
-  Plug 'elsdrium/YouCompleteMe', { 'do': './install.py --clang-completer', 'for': 'cpp' }
+  Plug 'elsdrium/YouCompleteMe', { 'do': './install.py --clang-completer', 'for': ['c', 'cpp'] }
 endif
 
 if v:version >= 800
@@ -628,6 +628,7 @@ set cul
 set history=100
 set wrap
 set nu
+set rnu
 set autoindent
 "set cursorline
 set showcmd

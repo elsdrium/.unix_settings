@@ -60,7 +60,7 @@ ln -fs .unix_settings/.gitconfig
 mkdir .ssh 2> /dev/null
 ln -fs ~/.unix_settings/.ssh/config ~/.ssh/config
 
-if [ "$1" = "--use-nvim" ]; then
+if type nvim > /dev/null; then
     # Neovim
     mkdir .config 2> /dev/null
     ln -fs ~/.unix_settings/.vim ~/.config/nvim
