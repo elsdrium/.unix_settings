@@ -82,4 +82,4 @@ fi
 # Update zsh
 source .zshrc
 
-echo 'Done. For better vim support, do not forget to install ctags, jsctags and jshint.'
+echo 'Done. For better vim support, do not forget to install ctags, jsctags, jshint and pygments.'

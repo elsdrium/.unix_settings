@@ -364,7 +364,7 @@ nnoremap <Leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
 let g:ale_open_list = 0
-let g:ale_fixers = {
+let g:ale_linters = {
       \   'c': ['clang'],
       \   'cpp': ['clang'],
       \   'python': ['flake8'],

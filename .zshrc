@@ -87,7 +87,8 @@ DISABLE_AUTO_UPDATE="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git gitfast github vi-mode ssh-agent sudo incr mix aws)
+plugins=(git gitfast github vi-mode ssh-agent sudo incr)
+# optional plugins: mix aws
 
 source $ZSH/oh-my-zsh.sh
 
@@ -179,7 +180,6 @@ alias rcd='ranger-cd'
 alias ssh='TERM=xterm-256color ssh -X'
 alias tmux='TERM=xterm-256color tmux -2 -u'
 # alias vnc=xvnc4viewer -FullColor
-alias nvcc='nvcc -std=c++11'
 alias clang++='clang++ -std=c++14'
 # alias cuda='clang++ -std=c++11 -I/usr/local/cuda/include -L/usr/local/cuda/lib64 -lcudart --cuda-gpu-arch=sm_30'
 alias g++='g++ -std=c++14'
