@@ -498,6 +498,7 @@ set list lcs=tab:\|\ ,trail:\|
 " filetype-specific settings {{{1
 augroup FileTypeStuff
   autocmd!
+  " autocmd FileType c,cpp setlocal equalprg=clang-format\ -style='LLVM'
   autocmd FileType java setlocal omnifunc=javacomplete#Complete
   autocmd FileType markdown nnoremap <C-m> :InstantMarkdownPreview<CR>
   autocmd FileType nerdtree setlocal nolist
@@ -628,7 +629,7 @@ set cul
 set history=100
 set wrap
 set nu
-set rnu
+"set rnu
 set autoindent
 "set cursorline
 set showcmd
@@ -754,5 +755,13 @@ nnoremap gV `[v`]
 " formatting html
 nnoremap ,= :s/<[^>]*>/\r&\r/g<CR>:g/^$/d<CR>gg=G
 nnoremap <C-f> :Ag 
+
+"" hooks {{{1
+" if ctrl-v + alt-x shows ^[x, remap alt keymaps
+" for i in range(97,122)
+  " let c = nr2char(i)
+  " exec "map \e".c." <M-".c.">"
+  " exec "map! \e".c." <M-".c.">"
+" endfor
 
 " vim: foldenable foldmethod=marker foldcolumn=1
