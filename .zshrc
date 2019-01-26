@@ -117,9 +117,6 @@ export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 if [[ $platform == 'osx' ]]; then
     export PATH="/usr/local/opt/go/libexec/bin:/usr/local/opt/python@2/libexec/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
 
-    # Spark 1.5.1 requires JVM 1.7+
-    export JAVA_HOME='/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home'
-
     alias l='ls -hpG'
     alias ls='ls -hpG'
     alias ll='ls -hlpGA'
@@ -130,7 +127,7 @@ if [[ $platform == 'osx' ]]; then
 
 else # Linux
     export PATH="/usr/local/bin:/usr/games:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
-    export LD_LIBRARY_PATH="/usr/local/lib64:/usr/local/lib:/usr/lib"
+    export LD_LIBRARY_PATH="/usr/local/lib64:/usr/local/lib:/usr/lib64:/usr/lib"
 
     alias l='ls --color=auto -hp'
     alias ls='ls --color=auto -hp'
@@ -148,17 +145,6 @@ else # Linux
     alias xopen='xdg-open'
     alias gir='grep -ir'
 fi
-
-
-function ranger-cd {
-    tempfile="$(mktemp -t tmp.XXXXXX)"
-    /usr/bin/env ranger --choosedir="$tempfile" "${@:-$(pwd)}"
-    test -f "$tempfile" &&
-    if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
-        cd -- "$(cat "$tempfile")"
-    fi
-    rm -f -- "$tempfile"
-}
 
 function findcpp {
     TARGET=$([[ $1 = /*  ]] && echo "$1" || echo "$PWD/${1#./}")
@@ -201,7 +187,7 @@ else
 fi
 
 v() {
-    local args=("$@")
+    args=("$@")
     for file in "${args[@]}"; do
         [[ $file = -* ]] && continue   # Ignore options
         [[ $file = +* ]] && continue   # Ignore vim commands

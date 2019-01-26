@@ -56,6 +56,7 @@ ln -fs .unix_settings/.ctags.d
 ln -fs .unix_settings/.pylintrc
 ln -fs .unix_settings/.jshintrc
 ln -fs .unix_settings/.gitconfig
+ln -fs .unix_settings/.gdbinit
 
 mkdir .ssh 2> /dev/null
 ln -fs ~/.unix_settings/.ssh/config ~/.ssh/config
@@ -69,6 +70,7 @@ if type nvim > /dev/null; then
     # Install vim plugins in nvim
     nvim +PlugInstall +qall
 else
+    sed -i -e s/nvim/vim/g .unix_settings/.gitconfig
     # Install vim plugins
     vim +PlugInstall +qall
 fi
