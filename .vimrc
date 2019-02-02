@@ -494,6 +494,8 @@ set expandtab
 
 " indicate tab characters and trailing spaces
 set list lcs=tab:\|\ ,trail:\|
+" prune trailing tab/space
+command! PruneTrailing noautocmd silent! :%s/\s\+$//e
 
 " filetype-specific settings {{{1
 augroup FileTypeStuff

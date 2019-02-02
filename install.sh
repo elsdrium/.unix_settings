@@ -32,11 +32,11 @@ curl -fLo ~/.unix_settings/.vim/autoload/plug.vim --create-dirs https://raw.gith
 git clone https://github.com/robbyrussell/oh-my-zsh .unix_settings/.oh-my-zsh
 
 # Use personalized theme
-cp .unix_settings/bureau_custom.zsh-theme .unix_settings/.oh-my-zsh/themes/bureau_custom.zsh-theme
+ln -s ~/.unix_settings/bureau_custom.zsh-theme ~/.unix_settings/.oh-my-zsh/themes/bureau_custom.zsh-theme
 
 # custom plugin for zsh -- incr
 mkdir -p .unix_settings/.oh-my-zsh/custom/plugins/incr
-cp .unix_settings/incr.plugin.zsh .unix_settings/.oh-my-zsh/custom/plugins/incr
+ln -s ~/.unix_settings/incr.plugin.zsh ~/.unix_settings/.oh-my-zsh/custom/plugins/incr/incr.plugin.zsh
 
 # tmux plugin manager and corresponding plugins
 git clone --depth 1 https://github.com/tmux-plugins/tpm .unix_settings/.tmux/plugins/tpm
