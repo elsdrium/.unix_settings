@@ -6,8 +6,6 @@ Settings for tools in Unix-like environments.
 
 - #### Easy to deploy
   Just one command. Setup your familiar environment ready.
-- #### Well-done configuration for vim
-  A comprehensive integration of several popular vimrc and vim plugins.
 - #### Productive command-line tools
   Nice configuration for zsh and tmux.
 
