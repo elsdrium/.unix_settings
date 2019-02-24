@@ -1,23 +1,5 @@
 #!/usr/bin/env zsh
 
-# Check cmake, node and npm
-if ! type cmake &> /dev/null || ! type node &> /dev/null || ! type npm &> /dev/null ; then
-    echo 'Prerequisites are not installed. Please check the existences of cmake, node and npm.'
-    exit
-fi
-
-# Check Vim and Zsh
-VIM_CHECK=`echo "$(vim --version | egrep -o 'Vi IMproved [0-9]+[.][0-9]+' | cut -d' ' -f3) >= 7.4" | bc`
-ZSH_CHECK=`which zsh`    
-if [ ! $VIM_CHECK ]; then
-    echo '[WARNING] Cannot find Vim of version >= 7.4'
-elif [ ! $ZSH_CHECK ]; then
-    echo '[ERROR] Cannot find Zsh.'
-    exit
-elif [ ! `which curl` ]; then
-    echo '[ERROR] curl is required for installing vim.plug.'
-    exit
-fi
 # Note: it doesn't check git here, the environment should have git if this script already downloaded.
 
 # Back to home
@@ -27,15 +9,15 @@ cd ~
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 
-# Get vim.plug and oh-my-zsh
-curl -fLo ~/.unix_settings/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-git clone https://github.com/robbyrussell/oh-my-zsh .unix_settings/.oh-my-zsh
+# Get oh-my-zsh
+git clone --depth 1 https://github.com/robbyrussell/oh-my-zsh .unix_settings/.oh-my-zsh
 
 # Use personalized theme
-ln -s ~/.unix_settings/bureau_custom.zsh-theme ~/.unix_settings/.oh-my-zsh/themes/bureau_custom.zsh-theme
+mkdir -p ~/.unix_settings/.oh-my-zsh/custom/themes
+ln -s ~/.unix_settings/bureau_custom.zsh-theme ~/.unix_settings/.oh-my-zsh/custom/themes/bureau_custom.zsh-theme
 
 # custom plugin for zsh -- incr
-mkdir -p .unix_settings/.oh-my-zsh/custom/plugins/incr
+mkdir -p ~/.unix_settings/.oh-my-zsh/custom/plugins/incr
 ln -s ~/.unix_settings/incr.plugin.zsh ~/.unix_settings/.oh-my-zsh/custom/plugins/incr/incr.plugin.zsh
 
 # tmux plugin manager and corresponding plugins
@@ -46,11 +28,8 @@ git clone --depth 1 https://github.com/tmux-plugins/tmux-resurrect .unix_setting
 ln -fs .unix_settings/.zshrc
 ln -fs .unix_settings/.oh-my-zsh
 ln -fs .unix_settings/.tmux
-ln -fs .unix_settings/.vim
-ln -fs .unix_settings/.vimrc
 ln -fs .unix_settings/.inputrc
 ln -fs .unix_settings/.jupyter
-#ln -fs .unix_settings/.ipython
 ln -fs .unix_settings/.tmux.conf
 ln -fs .unix_settings/.ctags.d
 ln -fs .unix_settings/.pylintrc
@@ -61,20 +40,6 @@ ln -fs .unix_settings/.gdbinit
 mkdir .ssh 2> /dev/null
 ln -fs ~/.unix_settings/.ssh/config ~/.ssh/config
 
-if type nvim > /dev/null; then
-    # Neovim
-    mkdir .config 2> /dev/null
-    ln -fs ~/.unix_settings/.vim ~/.config/nvim
-    ln -fs ~/.unix_settings/.vimrc ~/.config/nvim/init.vim
-
-    # Install vim plugins in nvim
-    nvim +PlugInstall +qall
-else
-    sed -i -e s/nvim/vim/g .unix_settings/.gitconfig
-    # Install vim plugins
-    vim +PlugInstall +qall
-fi
-
 ## (optional)
 #`ln -fs .unix_settings/.pudb-theme.py`
 #`ln -fs .unix_settings/.Xmodmap`
@@ -83,5 +48,4 @@ fi
 
 # Update zsh
 source .zshrc
-
-echo 'Done. For better vim support, do not forget to install ctags, jsctags, jshint and pygments.'
+echo "Recommend using vim config from from https://github.com/elsdrium/.vim"

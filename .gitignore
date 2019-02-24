@@ -1,4 +1,3 @@
-.vim/*
 .oh-my-zsh
 .ipython/profile_*/security/*
 .ipython/profile_*/pid/*
@@ -7,8 +6,5 @@
 .ssh/*
 .tmux/resurrect/*
 .tmux/plugins/*
-.tags*
 
 !.ssh/config
-!.vim/colors
-!.vim/.vimrc
