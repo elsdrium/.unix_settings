@@ -24,6 +24,10 @@ ln -s ~/.unix_settings/incr.plugin.zsh ~/.unix_settings/.oh-my-zsh/custom/plugin
 git clone --depth 1 https://github.com/tmux-plugins/tpm .unix_settings/.tmux/plugins/tpm
 git clone --depth 1 https://github.com/tmux-plugins/tmux-resurrect .unix_settings/.tmux/plugins/tmux-resurrect
 
+# vim config
+git clone --depth 1 https://github.com/elsdrium/.vim
+.vim/unix_setup.sh
+
 # Create symbolic links for dot-files
 ln -fs .unix_settings/.zshrc
 ln -fs .unix_settings/.oh-my-zsh
@@ -34,11 +38,17 @@ ln -fs .unix_settings/.tmux.conf
 ln -fs .unix_settings/.ctags.d
 ln -fs .unix_settings/.pylintrc
 ln -fs .unix_settings/.jshintrc
-ln -fs .unix_settings/.gitconfig
 ln -fs .unix_settings/.gdbinit
 
 mkdir .ssh 2> /dev/null
 ln -fs ~/.unix_settings/.ssh/config ~/.ssh/config
+
+# Setup git global config
+if [[ -f ~/.gitconfig ]]; then
+    echo "~/.gitconfig exists, do nothing."
+else
+    cp ~/.unix_settings/.gitconfig ~
+fi
 
 ## (optional)
 #`ln -fs .unix_settings/.pudb-theme.py`
