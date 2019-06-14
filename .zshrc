@@ -4,6 +4,8 @@ unset SSH_AUTH_SOCK
 
 # Disable ctrl-s freezing
 stty -ixon
+# Reserve ctrl-h
+stty erase '^?'
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
