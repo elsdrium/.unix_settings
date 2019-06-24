@@ -28,6 +28,9 @@ git clone --depth 1 https://github.com/tmux-plugins/tmux-resurrect .unix_setting
 git clone --depth 1 https://github.com/elsdrium/.vim
 .vim/unix_setup.sh
 
+# gdb dashboard
+curl -fLo ~/.unix_settings/.gdbinit https://raw.githubusercontent.com/cyrus-and/gdb-dashboard/master/.gdbinit
+
 # Create symbolic links for dot-files
 ln -fs .unix_settings/.zshrc
 ln -fs .unix_settings/.oh-my-zsh
