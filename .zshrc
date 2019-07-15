@@ -23,6 +23,12 @@ elif [[ "$unamestr" == 'FreeBSD' ]]; then
     export platform='freebsd'
 fi
 
+# Notification for long-running commands
+precmd () {
+  echo -n -e "\a"
+}
+
+start_time=$SECONDS
 function estimate_time_preexec {
     start_time=$SECONDS
 }
@@ -180,6 +186,25 @@ alias p3u='sudo -H pip3 install --upgrade'
 alias ipy='ipython3'
 unalias grv
 
+pushd()
+{
+  if [ $# -eq 0 ]; then
+    DIR="${HOME}"
+  else
+    DIR="$1"
+  fi
+
+  builtin pushd "${DIR}" > /dev/null
+}
+
+popd()
+{
+  builtin popd > /dev/null
+}
+
+alias cd='pushd'
+alias bd='popd'
+
 # neovim is preferred, otherwise fall back to vi
 if ! type nvim &> /dev/null; then
     export VISUAL="vim"
@@ -207,12 +232,10 @@ v() {
 NORMAL_SYMBOL='@'
 INSERT_SYMBOL='@'
 #alias ndrun='nvidia-docker run -t -i -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix --rm' # run Nvidia docker with X11 GUI
+#
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
 export NVM_DIR="$HOME/.nvm"
 [[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [[ -s "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-
-if [[ -f ~/.machine_config ]]; then; source ~/.machine_config; fi
-
-if [[ -f /usr/local/bin/aws_zsh_completer.sh ]]; then; source /usr/local/bin/aws_zsh_completer.sh; fi
