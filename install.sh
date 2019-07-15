@@ -42,6 +42,7 @@ ln -fs .unix_settings/.ctags.d
 ln -fs .unix_settings/.pylintrc
 ln -fs .unix_settings/.jshintrc
 ln -fs .unix_settings/.gdbinit
+ln -fs .unix_settings/.gdbinit.d
 
 mkdir .ssh 2> /dev/null
 ln -fs ~/.unix_settings/.ssh/config ~/.ssh/config
