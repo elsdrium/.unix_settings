@@ -188,16 +188,19 @@ let g:tagbar_type_elixir = {
 """ vim-gutentags {{{1
 let $GTAGSLABEL = 'native-pygments'
 let $GTAGSCONF = '/usr/local/share/gtags/gtags.conf'
+nnoremap gu :GutentagsToggleEnabled<CR>
+let g:gutentags_enabled = 0
 let g:gutentags_cache_dir = expand('~/.cache/tags')
 let g:gutentags_ctags_executable = 'ctags'
 let g:gutentags_ctags_tagfile = '.tags'
 let g:gutentags_project_root = ['.project_root']
 let g:gutentags_resolve_symlinks = 1
+let gutentags_define_advanced_commands = 1
 
 let g:gutentags_modules = []
-" if executable('ctags')
-  " let g:gutentags_modules += ['ctags']
-" endif
+if executable('ctags')
+  let g:gutentags_modules += ['ctags']
+endif
 if executable('gtags-cscope') && executable('gtags')
   let g:gutentags_modules += ['gtags_cscope']
   " Use gtags-cscope instead of classic cscope, if possible
