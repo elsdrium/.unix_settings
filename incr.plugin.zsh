@@ -18,6 +18,7 @@ bindkey -M viins '^H' vi-backward-delete-char-incr
 bindkey -M viins '^w' vi-backward-kill-word-incr
 bindkey -M viins '^i' expand-or-complete-prefix-incr
 bindkey -M viins '^z' set-no-prediction
+bindkey -M viins ' '  self-insert
 
 #unsetopt automenu
 compdef -d scp
