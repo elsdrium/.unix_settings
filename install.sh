@@ -5,8 +5,27 @@
 # Back to home
 cd ~
 
+mkdir -p .local/bin
+
+# Setup git global config
+if [[ -f ~/.gitconfig ]]; then
+    echo "~/.gitconfig exists, skipped."
+else
+    cp ~/.unix_settings/.gitconfig ~
+fi
+
+# Get diff-so-fancy
+git clone --depth 1 https://github.com/so-fancy/diff-so-fancy ~/.unix_settings/diff-so-fancy
+if type npm >& /dev/null ; then
+    cd ~/.unix_settings/diff-so-fancy
+    npm install
+    ln -s `realpath diff-so-fancy` ~/.local/bin
+    git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
+    cd -
+fi
+
 # Get FZF
-git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+[ -d ~/.fzf ] || git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 
 # Get oh-my-zsh
@@ -25,8 +44,12 @@ git clone --depth 1 https://github.com/tmux-plugins/tpm .unix_settings/.tmux/plu
 git clone --depth 1 https://github.com/tmux-plugins/tmux-resurrect .unix_settings/.tmux/plugins/tmux-resurrect
 
 # vim config
-git clone --depth 1 https://github.com/elsdrium/.vim
-.vim/unix_setup.sh
+if [ -d .vim >& /dev/null ]; then
+    echo ".vim exists, skipped."
+else
+    git clone --depth 1 https://github.com/elsdrium/.vim
+    .vim/unix_setup.sh
+fi
 
 # gdb dashboard
 curl -fLo ~/.unix_settings/.gdbinit https://raw.githubusercontent.com/cyrus-and/gdb-dashboard/master/.gdbinit
@@ -44,15 +67,8 @@ ln -fs .unix_settings/.jshintrc
 ln -fs .unix_settings/.gdbinit
 ln -fs .unix_settings/.gdbinit.d
 
-mkdir .ssh 2> /dev/null
+mkdir .ssh >& /dev/null
 ln -fs ~/.unix_settings/.ssh/config ~/.ssh/config
-
-# Setup git global config
-if [[ -f ~/.gitconfig ]]; then
-    echo "~/.gitconfig exists, do nothing."
-else
-    cp ~/.unix_settings/.gitconfig ~
-fi
 
 ## (optional)
 #`ln -fs .unix_settings/.pudb-theme.py`

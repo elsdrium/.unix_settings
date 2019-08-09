@@ -25,7 +25,7 @@ fi
 
 # Notification for long-running commands
 precmd () {
-  echo -n -e "\a"
+    echo -n -e "\a"
 }
 
 start_time=$SECONDS
@@ -121,9 +121,11 @@ bindkey -M viins "^B" vi-backward-word
 bindkey -M viins "^F" vi-forward-word
 
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+export FZF_DEFAULT_COMMAND='ag -g ""'
+export FZF_CTRL_T_COMMAND='ag -g ""'
 
 if [[ $platform == 'osx' ]]; then
-    export PATH="/usr/local/opt/go/libexec/bin:/usr/local/opt/python@2/libexec/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
+    export PATH="~/.local/bin:/usr/local/opt/go/libexec/bin:/usr/local/opt/python@2/libexec/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
 
     alias l='ls -hpG'
     alias ls='ls -hpG'
@@ -134,7 +136,7 @@ if [[ $platform == 'osx' ]]; then
     alias imgcat=~/.iterm2/imgcat
 
 else # Linux
-    export PATH="/usr/local/bin:/usr/games:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
+    export PATH="~/.local/bin:/usr/local/bin:/usr/games:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin"
     export LD_LIBRARY_PATH="/usr/local/lib64:/usr/local/lib:/usr/lib64:/usr/lib"
 
     alias l='ls --color=auto -hp'
@@ -188,25 +190,25 @@ unalias grv
 
 pushd()
 {
-  if [ $# -eq 0 ]; then
-    DIR="${HOME}"
-  else
-    DIR="$1"
-  fi
+    if [ $# -eq 0 ]; then
+        DIR="${HOME}"
+    else
+        DIR="$1"
+    fi
 
-  builtin pushd "${DIR}" > /dev/null
+    builtin pushd "${DIR}" > /dev/null
 }
 
 popd()
 {
-  builtin popd > /dev/null
+    builtin popd > /dev/null
 }
 
 alias cd='pushd'
 alias bd='popd'
 
 # neovim is preferred, otherwise fall back to vi
-if ! type nvim &> /dev/null; then
+if ! type nvim >& /dev/null; then
     export VISUAL="vim"
     export EDITOR="vim"
 else
