@@ -6,5 +6,6 @@
 .ssh/*
 .tmux/resurrect/*
 .tmux/plugins/*
+.jupyter/migrated
 
 !.ssh/config

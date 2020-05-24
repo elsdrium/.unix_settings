@@ -10,6 +10,7 @@ zle -N vi-backward-kill-word-incr
 zle -N backward-delete-char-incr
 zle -N expand-or-complete-prefix-incr
 zle -N set-no-prediction
+zle -N toggle-incr
 compinit
 
 bindkey -M viins '^[' vi-cmd-mode-incr
@@ -18,6 +19,7 @@ bindkey -M viins '^H' vi-backward-delete-char-incr
 bindkey -M viins '^w' vi-backward-kill-word-incr
 bindkey -M viins '^i' expand-or-complete-prefix-incr
 bindkey -M viins '^z' set-no-prediction
+bindkey -M viins '^u' toggle-incr
 bindkey -M viins ' '  self-insert
 
 #unsetopt automenu
@@ -27,10 +29,17 @@ compdef -d java
 compdef -d svn
 compdef -d cvs
 
-# TODO:
-#     cp dir/
-
+incr_enabled=1
 now_predict=0
+
+function toggle-incr
+{
+    if [[ "$incr_enabled" ]]; then
+        unset incr_enabled
+    else
+        incr_enabled=1
+    fi
+}
 
 function limit-completion
 {
@@ -112,7 +121,7 @@ function self-insert-incr
     correct-prediction
     remove-prediction
     if zle .self-insert; then
-        show-prediction
+        [[ "$incr_enabled" ]] && show-prediction
     fi
 }
 
@@ -121,7 +130,7 @@ function vi-backward-delete-char-incr
     correct-prediction
     remove-prediction
     if zle vi-backward-delete-char; then
-        show-prediction
+        [[ "$incr_enabled" ]] && show-prediction
     fi
 }
 
@@ -130,7 +139,7 @@ function vi-backward-kill-word-incr
     correct-prediction
     remove-prediction
     if zle vi-backward-kill-word; then
-        show-prediction
+        [[ "$incr_enabled" ]] && show-prediction
     fi
 }
 
@@ -139,7 +148,7 @@ function backward-delete-char-incr
     correct-prediction
     remove-prediction
     if zle backward-delete-char; then
-        show-prediction
+        [[ "$incr_enabled" ]] && show-prediction
     fi
 }
 

@@ -176,7 +176,8 @@ alias rrv='v +PlugClean +PlugUpdate +PlugInstall +qall'
 alias ev='v ~/.vimrc'
 alias rz='source ~/.zshrc'
 alias ez='v ~/.zshrc'
-alias rcd='ranger-cd'
+alias et='v ~/.tmux.conf'
+alias clearenv="unset \$(env | awk -F'=' '{print \$1}')"
 alias ssh='TERM=xterm-256color ssh -X'
 alias tmux='TERM=xterm-256color tmux -2 -u'
 # alias vnc=xvnc4viewer -FullColor
