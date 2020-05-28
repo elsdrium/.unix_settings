@@ -171,12 +171,13 @@ alias fpp='fpp --keep-open'
 alias less='less -r'
 alias nv='nvim'
 alias nvdiff='nvim -d'
-alias rv='v +PlugUpdate +qall'
-alias rrv='v +PlugClean +PlugUpdate +PlugInstall +qall'
-alias ev='v ~/.vimrc'
+alias rv='$EDITOR +PlugUpdate +qall'
+alias rrv='$EDITOR +PlugClean +PlugUpdate +PlugInstall +qall'
+alias ev='$EDITOR ~/.vimrc'
 alias rz='source ~/.zshrc'
-alias ez='v ~/.zshrc'
-alias et='v ~/.tmux.conf'
+alias ez='$EDITOR ~/.zshrc'
+alias et='$EDITOR ~/.tmux.conf'
+alias vv='$EDITOR -c "normal '\''0"'
 alias clearenv="unset \$(env | awk -F'=' '{print \$1}')"
 alias ssh='TERM=xterm-256color ssh -X'
 alias tmux='TERM=xterm-256color tmux -2 -u'
@@ -228,8 +229,13 @@ v() {
             return 1
         fi
     done
-    # Use `command' to invoke the vim binary
-    command "$EDITOR" "${args[@]}"
+
+    if [[ "$#" = "1" ]] && [[ "$@" = "-" ]]; then
+        vv
+    else
+        # Use `command' to invoke the vim binary
+        command "$EDITOR" "${args[@]}"
+    fi
 }
 
 NORMAL_SYMBOL='@'
