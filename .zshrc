@@ -125,7 +125,8 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_CTRL_T_COMMAND='ag -g ""'
 
 if [[ $platform == 'osx' ]]; then
-    export PATH="~/.local/bin:/usr/local/opt/go/libexec/bin:/usr/local/opt/python@2/libexec/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
+    export PATH="/Users/$USER/.local/bin:/usr/local/opt/go/libexec/bin:/usr/local/opt/python@2/libexec/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
+    export PATH="/Users/elsdrium/Library/Python/3.8/bin:$PATH"
 
     alias l='ls -hpG'
     alias ls='ls -hpG'
@@ -244,7 +245,4 @@ INSERT_SYMBOL='@'
 #
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
-export NVM_DIR="$HOME/.nvm"
-[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[[ -s "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh

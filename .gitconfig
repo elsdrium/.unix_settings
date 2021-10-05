@@ -6,7 +6,7 @@
     ci = commit
     co = checkout
     br = branch
-    df = diff
+    df = diff -C
     pick = cherry-pick
     fp = format-patch
     la = log --graph --decorate --pretty=oneline --abbrev-commit --all
