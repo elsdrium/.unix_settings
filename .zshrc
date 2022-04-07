@@ -155,6 +155,7 @@ else # Linux
     alias dus='du -smh' # disk usage summary
     alias xopen='xdg-open'
     alias gir='grep -ir'
+    alias pscount="ps --no-headers auxwwwm | cut -f1 -d' ' | sort | uniq -c | sort -n"
 fi
 
 function findcpp {
@@ -165,6 +166,7 @@ function findcpp {
         -iname '*.inl'
 }
 
+alias tree='tree -f'
 alias grep='grep --color=auto -n'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -183,10 +185,7 @@ alias clearenv="unset \$(env | awk -F'=' '{print \$1}')"
 alias ssh='TERM=xterm-256color ssh -X'
 alias tmux='TERM=xterm-256color tmux -2 -u'
 # alias vnc=xvnc4viewer -FullColor
-alias clang++='clang++ -std=c++14'
 # alias cuda='clang++ -std=c++11 -I/usr/local/cuda/include -L/usr/local/cuda/lib64 -lcudart --cuda-gpu-arch=sm_30'
-alias g++='g++ -std=c++14'
-alias p2u='sudo -H pip2 install --upgrade'
 alias p3u='sudo -H pip3 install --upgrade'
 alias ipy='ipython3'
 unalias grv
