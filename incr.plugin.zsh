@@ -11,7 +11,7 @@ zle -N backward-delete-char-incr
 zle -N expand-or-complete-prefix-incr
 zle -N set-no-prediction
 zle -N toggle-incr
-compinit
+compinit -u
 
 bindkey -M viins '^[' vi-cmd-mode-incr
 bindkey -M viins '^?' vi-backward-delete-char-incr
@@ -47,7 +47,7 @@ function limit-completion
         zle -M ""
     elif ((compstate[list_lines] > 6)); then
         compstate[list]=""
-        zle -M "too many matches."
+        zle -M "too many matches. (${compstate[nmatches]} candidates)"
     fi
 }
 
@@ -70,12 +70,13 @@ function remove-prediction
 
 function show-prediction
 {
-    # assert(now_predict == 0)
+    TILDE_REGEX='( |^)~([a-zA-Z0-9]*)$'
     if
         ((PENDING == 0)) &&
             ((CURSOR > 1)) &&
             [[ "$PREBUFFER" == "" ]] &&
-            [[ "$BUFFER[CURSOR]" != " " ]]
+            [[ "$BUFFER[CURSOR]" != " " ]] &&
+            [[ ! $BUFFER =~ $TILDE_REGEX ]]
     then
         cursor_org="$CURSOR"
         buffer_org="$BUFFER"
