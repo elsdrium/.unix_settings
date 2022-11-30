@@ -184,11 +184,33 @@ alias vv='$EDITOR -c "normal '\''0"'
 alias clearenv="unset \$(env | awk -F'=' '{print \$1}')"
 alias ssh='TERM=xterm-256color ssh -X'
 alias tmux='TERM=xterm-256color tmux -2 -u'
+alias hl='highlight -O xterm256 -s molokai'
+alias sum-lines='sed s:$:+: | tr -d \\'\n\\' | sed s:+$:\\n: | bc'
 # alias vnc=xvnc4viewer -FullColor
 # alias cuda='clang++ -std=c++11 -I/usr/local/cuda/include -L/usr/local/cuda/lib64 -lcudart --cuda-gpu-arch=sm_30'
-alias p3u='sudo -H pip3 install --upgrade'
 alias ipy='ipython3'
 unalias grv
+
+which-extended() {
+    WHICH_QUERY=`which $1 2> /dev/null`
+    if [ "x${WHICH_QUERY}" != "x" ]; then
+        if [[ "$(type $1)" =~ "is an alias" ]]; then
+            echo ${WHICH_QUERY}
+            if [[ `echo ${WHICH_QUERY} | head -n1 | egrep '^\S+(: aliased to|=)'` ]]; then
+                QUERY_ALIAS=`echo ${WHICH_QUERY//(: aliased to |=)/ } | awk '{print $2}'`
+                if [ "x${QUERY_ALIAS}" != "x" ]; then
+                    NEW_QUERY=`echo ${QUERY_ALIAS} | awk '{print $1}'`
+                    [[ "${NEW_QUERY}" != "$1" ]] && which-extended ${NEW_QUERY}
+                fi
+            fi
+        elif [[ "$(type $1)" =~ "is a shell function" ]]; then
+            declare -f $1 | highlight -O xterm256 -s molokai --syntax bash
+        else
+            echo ${WHICH_QUERY}
+        fi
+    fi
+}
+alias w='which-extended'
 
 pushd()
 {
