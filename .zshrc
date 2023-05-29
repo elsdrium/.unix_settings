@@ -216,8 +216,11 @@ pushd()
 {
     if [ $# -eq 0 ]; then
         DIR="${HOME}"
-    else
+    elif [[ $1 = -* ]]; then
         DIR="$1"
+    else
+        DIR=`realpath $1`
+        [[ "x${DIR}" = "x" ]] && DIR="$1"
     fi
 
     builtin pushd "${DIR}" > /dev/null
