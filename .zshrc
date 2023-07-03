@@ -191,6 +191,10 @@ alias sum-lines='sed s:$:+: | tr -d \\'\n\\' | sed s:+$:\\n: | bc'
 alias ipy='ipython3'
 unalias grv
 
+export VSCODE_IPC_HOOK_CLI="$(ls -t1 /run/user/$(id -u)/vscode-ipc-* | head -n 1)"
+export VSCODE_REMOTE="${HOME}/.vscode-server/bin/$(ls -t1 ${HOME}/.vscode-server/bin | head -n 1)/bin/remote-cli/code"
+alias code-remote="${VSCODE_REMOTE}"
+
 which-extended() {
     WHICH_QUERY=`which $1 2> /dev/null`
     if [ "x${WHICH_QUERY}" != "x" ]; then
